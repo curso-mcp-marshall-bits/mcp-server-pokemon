@@ -22,27 +22,25 @@ server.registerTool(
     title: "Consultar un pokemon",
     inputSchema: {
       name: z.string().describe("Nombre del pokemon a consultar"),
-    },
-    outputSchema: z.object({
-      name: z.string(),
-      height: z.number(),
-      weight: z.number(),
-    }).describe("Información del pokemon"),
+    }
   },
   async (params) => {
     const { name } = params;
     const pokemonData = await fetchPokemon(name);
-    return {content: [
-      {type: "text", text: `Nombre: ${pokemonData.name}`},
-      {type: "text", text: `Altura: ${pokemonData.height}`},
-      {type: "text", text: `Peso: ${pokemonData.weight}`},
-    ]};        
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Nombre: ${pokemonData.name}, Altura: ${pokemonData.height}, Peso: ${pokemonData.weight}`,
+        },
+      ],
+    };
   }
 );
 
 async function fetchPokemon(name: string) {
   const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
+    `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase().trim()}`
   );
   if (!response.ok) {
     throw new Error(`Pokemon ${name} not found`);
