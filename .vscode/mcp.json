@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "hola-mcp": {
+      "type": "stdio",
+      "command": "npm",
+      "args": ["run", "server:dev"]
+    }
+  },
+  "inputs": []
+}
