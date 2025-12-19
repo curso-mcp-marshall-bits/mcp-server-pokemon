@@ -122,17 +122,24 @@ async function fetchPokemon(name: string) {
 }
 
 async function postPokemon(nameOrId: string) {
-  const response = await fetch("http://localhost:3000/pokemons", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nameOrId }),
-  });
+  try {
+    const response = await fetch("http://localhost:3000/pokemons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nameOrId }),
+    });
 
-  if (!response.ok) {
-    throw new Error(`POST fallido: ${response.status} ${response.statusText}`);
+    if (!response.ok) {
+      throw new Error(
+        `POST fallido: ${response.status} ${response.statusText}`
+      );
+    }
+
+    return await response.text();
+  } catch (error) {
+    console.error("Ha habido un error en el fetch: ", error);
+    throw error;
   }
-
-  return await response.text();
 }
 
 async function main() {
