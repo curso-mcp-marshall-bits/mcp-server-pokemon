@@ -137,7 +137,7 @@ async function postPokemon(nameOrId: string) {
 
     return await response.text();
   } catch (error) {
-    console.error("Ha habido un error en el fetch: ", error);
+    console.error("SE HA PRODUCIDO UN ERROR EN EL FETCH: ", error);
     throw error;
   }
 }
