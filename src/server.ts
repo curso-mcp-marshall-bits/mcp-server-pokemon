@@ -108,6 +108,32 @@ server.registerResource(
   }
 );
 
+// PROMPTS
+
+server.registerPrompt(
+  "prompt-create",
+  {
+    title: "generar un pokemon",
+    description: "Genera el prompt para crear un nuevo pokemon",
+    argsSchema: {
+      nameOrId: z.string().describe("El nombre del pokemon a buscar o su id"),
+    }
+  },
+  ({nameOrId}) => {
+    return {
+      messages: [
+        {
+          role: "user",
+          content: {
+            type: "text",
+            text: `Genera el pokemon ${nameOrId} y responde con los datos en forma de tabla`,
+          },
+        },
+      ],
+    };
+  }
+);
+
 async function fetchPokemon(name: string) {
   const response = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${name.toLocaleLowerCase().trim()}`
